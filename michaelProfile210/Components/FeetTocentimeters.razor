@@ -1,0 +1,32 @@
+﻿<h3>FeetTocentimeters</h3>
+
+<div class="mb-3">
+    <label class="form-label">Amount (feet):</label>
+    <BlazorBootstrap.NumberInput TValue="int" @bind-Value="@feet" Placeholder="Enter amount" />
+
+    <label class="form-label">Amount (inches):</label>
+    <BlazorBootstrap.NumberInput TValue="int" @bind-Value="@inches" Placeholder="Enter amount" />
+
+    @* <Button @oneclick="() => FeetAndInchesToCM(feet, inches)">Calculate</Button> *@
+
+</div>
+<div class="mb-3">Entered Amount in CM: @centimeters</div>
+
+@code {
+    private int feet;
+    private int inches;
+    private decimal centimeters;
+    private decimal FeetAndInchesToCM(int feet, int inches)
+    {
+        decimal ret = 0;
+        //Convert feet to inches
+        ret = feet * 12;
+        //add the inches that were entered
+        ret = ret + inches;
+        //add the inches into cm
+        ret = ret * 2.54m;
+        return ret;
+    }
+}
+
+
