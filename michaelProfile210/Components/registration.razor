@@ -1,0 +1,76 @@
+﻿@page "/register"
+
+<h3>User Registration</h3>
+
+@if (registrationSuccessful)
+{
+    <p style="color: green;">You have successfully registered!</p>
+}
+else
+{
+    <EditForm Model="@registrationInfo" OnValidSubmit="@ProcessRegistration">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="userName">Username:</label>
+            <InputText id="userName" class="form-control" @bind-Value="registrationInfo.UserName" required />
+        </div>
+
+        <div class="form-group">
+            <label for="userEmail">Email:</label>
+            <InputText id="userEmail" class="form-control" @bind-Value="registrationInfo.UserEmail" required />
+        </div>
+
+        <div class="form-group">
+            <label for="userPassword">Password:</label>
+            <InputText id="userPassword" type="password" class="form-control" @bind-Value="registrationInfo.UserPassword" required />
+        </div>
+
+        <div class="form-group">
+            <label for="passwordConfirm">Confirm Password:</label>
+            <InputText id="passwordConfirm" type="password" class="form-control" @bind-Value="registrationInfo.PasswordConfirm" required />
+        </div>
+
+        <div class="form-group">
+            <label for="birthDate">Date of Birth:</label>
+            <InputDate id="birthDate" class="form-control" @bind-Value="registrationInfo.BirthDate" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Register</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p style="color: red;">@errorMessage</p>
+    }
+}
+
+@code {
+    private RegistrationDetails registrationInfo = new RegistrationDetails();
+    private bool registrationSuccessful = false;
+    private string errorMessage = string.Empty;
+
+    private void ProcessRegistration()
+    {
+        // Check if passwords match
+        if (registrationInfo.UserPassword != registrationInfo.PasswordConfirm)
+        {
+            errorMessage = "Passwords do not match.";
+            return;
+        }
+
+        // Implement your registration logic here (e.g., save to a database)
+        registrationSuccessful = true;
+        errorMessage = string.Empty; // Clear any previous error messages
+    }
+
+    public class RegistrationDetails
+    {
+        public string UserName { get; set; } = string.Empty;
+        public string UserEmail { get; set; } = string.Empty;
+        public string UserPassword { get; set; } = string.Empty;
+        public string PasswordConfirm { get; set; } = string.Empty;
+        public DateTime BirthDate { get; set; } = DateTime.Now;
+    }
+}

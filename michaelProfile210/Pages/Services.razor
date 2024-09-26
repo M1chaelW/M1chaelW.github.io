@@ -1,0 +1,37 @@
+﻿<h3>Services</h3>
+@page "/services"
+
+<h1>Our IT Services</h1>
+
+<div class="services-list">
+    <ul>
+        @foreach (var service in services)
+        {
+            <li>
+                <h2>@service.Title</h2>
+                <p>@service.Description</p>
+            </li>
+        }
+    </ul>
+</div>
+
+@code {
+    private List<Service> services = new List<Service>
+    {
+        new Service { Title = "Web Development", Description = "Building responsive and high-performance web applications." },
+        new Service { Title = "Cloud Computing", Description = "Utilizing cloud technologies to enhance your business infrastructure." },
+        new Service { Title = "IT Support", Description = "Providing technical support and troubleshooting services for your business." },
+        new Service { Title = "Cybersecurity", Description = "Ensuring your data and systems are protected against cyber threats." },
+        new Service { Title = "Data Analytics", Description = "Turning data into actionable insights for better decision-making." },
+        new Service { Title = "Mobile App Development", Description = "Creating engaging and user-friendly mobile applications." }
+    };
+
+    private class Service
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+    }
+}
+@code {
+
+}

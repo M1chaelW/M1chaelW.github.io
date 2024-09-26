@@ -1,0 +1,44 @@
+﻿@page "/Basal_metabolic_rate"
+
+<h3>Basal Metabolic Rate Calculator</h3>
+
+<div class="mb-3">
+    <label class="form-label">Weight (kg):</label>
+    <BlazorBootstrap.NumberInput TValue="int" @bind-Value="@m" Placeholder="Enter mass (kg)" />
+
+    <label class="form-label">Age (years):</label>
+    <BlazorBootstrap.NumberInput TValue="int" @bind-Value="@a" Placeholder="Enter age (years)" />
+
+    <label class="form-label">Height (cm):</label>
+    <BlazorBootstrap.NumberInput TValue="int" @bind-Value="@h" Placeholder="Enter height (cm)" />
+
+    <BlazorBootstrap.Switch @bind-Value="male" Label="Male" />
+    <div class="mt-3">Male = <b>@male</b></div>
+
+    <Button @onclick="CalculateBMR">Calculate</Button>
+</div>
+
+<div class="mb-3">Entered BMR: @bmr Kcal/day</div>
+
+@code {
+    bool male;
+    private int m; // weight
+    private int h; // height
+    private int a; // age
+    private decimal bmr;
+
+    private decimal M = 10.0m; 
+    private decimal Ha = 6.25m; 
+    private decimal Aa = 5.0m;
+
+    private void CalculateBMR()
+    {
+        bmr = BMRate(m, h, a);
+    }
+
+    private decimal BMRate(int kg, int cm, int age)
+    {
+        int s = male ? 5 : -161;
+        return ((M * kg) + (Ha * cm) - (Aa * age) + s);
+    }
+}

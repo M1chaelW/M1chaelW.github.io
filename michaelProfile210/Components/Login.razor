@@ -1,0 +1,57 @@
+﻿@page "/login"
+
+<h3>User Login</h3>
+
+@if (isAuthenticated)
+{
+    <p style="color: green;">Successfully logged in!</p>
+}
+else
+{
+    <EditForm Model="@loginDetails" OnValidSubmit="@ProcessLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group">
+            <label for="userIdentifier">Username or Email:</label>
+            <InputText id="userIdentifier" class="form-control" @bind-Value="loginDetails.UserIdentifier" />
+        </div>
+
+        <div class="form-group">
+            <label for="userPassword">Password:</label>
+            <InputText id="userPassword" type="password" class="form-control" @bind-Value="loginDetails.UserPassword" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </EditForm>
+}
+
+@code {
+    private LoginInfo loginDetails = new LoginInfo();
+    private bool isAuthenticated = false;
+
+    private void ProcessLogin()
+    {
+        // Validate against hardcoded credentials
+        if ((loginDetails.UserIdentifier == "admin" || loginDetails.UserIdentifier == "admin@github.io")
+            && loginDetails.UserPassword == "WOPR")
+        {
+            isAuthenticated = true;
+        }
+        else
+        {
+            isAuthenticated = false; // Optionally show an error message
+        }
+    }
+
+    public class LoginInfo
+    {
+        public string UserIdentifier { get; set; } = string.Empty;
+        public string UserPassword { get; set; } = string.Empty;
+    }
+}
+
+}
+@code {
+
+}
